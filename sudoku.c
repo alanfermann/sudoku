@@ -45,24 +45,30 @@ int testeQuadrat(int mat[N][N], int x, int y){
 int sudoku(int mat[N][N]){
 	int i, j, k;
 	for (i=0; i<N; i++){
-		int row = 0;
-		int col = 0;
-		for(j=0; j<N; j++){
-			row = row | (1 << mat[i][j]-1);
-			col = col | (1 << mat[j][i]-1);
+		int zeile[N]={0};
+		int spalte[N]={0};
 
+		for(j=0; j<N; j++){
 			int a=mat[i][j];
 			int b=mat[j][i];
+			if(a>=0 && a<=N)
+				zeile[a-1]++;
+			if(b>=0 && b<=N)
+				spalte[b-1]++;
 		}
-		if (row != 511){
-			printf("\nFehler in Zeile\n");
-			return 0;
+	
+		for(k=0; k<N; k++){
+			if(zeile[k]!=1){
+				printf("\nFehler in Zeile:%d\n", i+1);
+				printf("Wert: %d", k+1);
+				return 0;
+			}
+			if(spalte[k]!=1){
+				printf("\nFehler in Spalte:%d\n", i+1);
+				printf("Wert: %d", k+1);
+				return 0;
+			}
 		}
-		if (col != 511){
-			printf("\nFehler in Spalte\n");
-			return 0;
-		}
-
 	}
 		
 	int zaehler=0;
